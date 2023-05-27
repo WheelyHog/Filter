@@ -1,21 +1,14 @@
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import './App.css';
-import { fetchProductsList } from './request';
+import Filter from './components/Filter/Filter';
+import ProductList from './components/ProductList/ProductList';
 
 function App() {
-
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    dispatch(fetchProductsList())
-  }, [])
-
-  return (
-    <div className="App">
-
-    </div>
-  );
+	return (
+		<div className="App">
+			<Filter />
+			<ProductList />
+		</div>
+	);
 }
 
 export default App;
