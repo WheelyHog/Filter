@@ -15,7 +15,7 @@ export default function ProductList() {
 		dispatch(fetchProductsList());
 	}, [dispatch]);
 
-	console.log('ProductList: ', products);
+	// console.log('ProductList: ', products);
 	return (
 		<div className={s.products_container}>
 			{products.map((elem) => (

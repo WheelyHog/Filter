@@ -1,70 +1,32 @@
-# Getting Started with Create React App
+# Обратите внимание!
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+ в решении задачи с фильтрацией по дипазону цен я не учел что данные котрые мы записываем в state должны возвращаться в value соответсвующего инпута, по этому не выпонялась проверка на то что введенные данные не число...
 
-## Available Scripts
+ т.е после того как я ввожу какое нибудь значение выполняется проверка на число и если это правда товыплняется логика добавления числа в state и потом уже это проверенное значение опять отрисовывается в значении инпута. Т.е после введения данных в инпуте мы видим не то что мы ввидим, а уже то что приходит из стейта!
 
-In the project directory, you can run:
+ Я добавил value={from || ''} или value={to || ''} в соответсвующие инпуты, и теперь мы можем испоьзовать у инпута type="техт".
 
-### `npm start`
+ Это просто еще один вариант решения и что выбирать "text" или "number" на ваше усотрение.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+в случае с number к стати можно еще упростить наш код в функции, а именно не нужно выполнять проверку на вводимые данные (, или букву), это происходит в input number под капотом.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Таким образом state испоьзуется уже не для проверки данных, а только для ввода уже имеющихся ранее введенных данных в свойство from или to. Можно для этих целей использовать не только state, а взять данные из второго инпута через ref на него. Для этого определить 
 
-### `npm test`
+const refFrom = useRef();
+const refTo = useRef();
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+повесить на соответсвующие инпуты
+...
+ref ={refFrom}
+...
+ref ={refTo}
+и брать данные оттуда
 
-### `npm run build`
+	const range = {
+				from: targetInput === 'from' ? newValue : refFrom.current.value || -Infinity,
+				to: targetInput === 'to' ? newValue : refTo.current.value || Infinity,
+			};
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+без state думаю будет решение получше...
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+ну а в нашей д. работе при переходах по страницам значения в инпутах можно сбрасывать как я и говорил через useEffect, только уже обнулять не state, а ref ссылки. 
