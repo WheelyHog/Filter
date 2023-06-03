@@ -19,7 +19,7 @@ export default function ProductList() {
 	return (
 		<div className={s.products_container}>
 			{products.map((elem) => (
-				<ProductItem key={elem.id} {...elem} />
+				<ProductItem key={elem.id} product={elem} />
 			))}
 		</div>
 	);
